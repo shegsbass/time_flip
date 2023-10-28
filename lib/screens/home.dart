@@ -7,11 +7,21 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-
-
 class _HomeState extends State<Home> {
+
+  Map data = {};
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    data = (ModalRoute.of(context)?.settings.arguments as Map<dynamic, dynamic>?)!;
+    print(data);
+
     return Scaffold(
       body: SafeArea(
         child: Column(
