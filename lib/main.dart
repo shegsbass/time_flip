@@ -6,7 +6,7 @@ import 'package:time_flip/screens/choose_location.dart';
 
 void main() => runApp(MaterialApp(
 
-  initialRoute: '/home',
+  initialRoute: '/',
 
   routes: {
     '/': (context) => Loading(),

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
@@ -15,7 +14,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
   void getData() async {
 
     var url = Uri.https('jsonplaceholder.typicode.com', '/todos/1');
-    
+
     Response response = await get(url);
 
     Map data = jsonDecode(response.body);
