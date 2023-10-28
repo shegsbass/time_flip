@@ -7,6 +7,8 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
+
+
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,15 @@ class _HomeState extends State<Home> {
       body: SafeArea(
         child: Column(
           children: [
-            Text('Home Screen'),
+            ElevatedButton.icon(
+                onPressed: (){
+                  Navigator.pushNamed(context, '/location');
+                },
+                icon: const Icon(Icons.edit_location),
+                label: const Text(
+                  'Edit Location'
+                ),
+            ),
           ],
         ),
       ),
