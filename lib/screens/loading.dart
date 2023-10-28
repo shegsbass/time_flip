@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
+import 'package:time_flip/service/world_time.dart';
+
 class Loading extends StatefulWidget {
   const Loading({super.key});
 
@@ -10,43 +12,31 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
+  
+  String currentTime = 'loading';
 
-  void getData() async {
-
-    //Make network request
-    var url = Uri.https('worldtimeapi.org', '/api/timezone/africa/lagos');
-    Response response = await get(url);
-
-    Map data = jsonDecode(response.body);
-    //print (data);
-
-    // Get properties from json
-    String datetime = data['datetime'];
-    int dayOfTheWeek = data['day_of_week'];
-    String offset = data['utc_offset'].substring(1,3);
-    print(datetime);
-    //print(offset);
-    //print(dayOfTheWeek);
-
-    //create DateTime object
-    DateTime now = DateTime.parse(datetime);
-    now = now.add(Duration(hours: int.parse(offset)));
-    print(now);
-
+  Future<void> setupAfricaTime() async {
+    WorldTime instance = WorldTime(location: 'Lagos, Nigeria', flag: 'nigeria.png', url: '/Africa/Lagos');
+    await instance.getTime();
+    print(instance.time);
+    setState(() {
+      currentTime = instance.time;
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    getData();
+    setupAfricaTime();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: Padding(
+        padding: const EdgeInsets.all(50.0),
         child: Text(
-          'Loading'
+          currentTime
         ),
       ),
     );
