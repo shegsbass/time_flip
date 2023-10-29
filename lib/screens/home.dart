@@ -13,15 +13,15 @@ class _HomeState extends State<Home> {
 
   Map data = {};
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
 
-    data = (ModalRoute.of(context)?.settings.arguments as Map<dynamic, dynamic>?)!;
+    data = data.isNotEmpty ? data : (ModalRoute.of(context)?.settings.arguments as Map<dynamic, dynamic>?)!;
 
     //I'm defining the list of filenames that will display
     List<String> daytimeImages = ['daytime.jpg', 'daytime-2.jpg', 'daytime-3.jpg'];
@@ -52,8 +52,18 @@ class _HomeState extends State<Home> {
             child: Column(
               children: [
                 ElevatedButton.icon(
-                    onPressed: (){
-                      Navigator.pushNamed(context, '/location');
+                    onPressed: () async{
+                      dynamic result = await Navigator.pushNamed(context, '/location');
+                      if (result != null){
+                        setState(() {
+                          data = {
+                            'time': result['time'],
+                            'location': result['location'],
+                            'flag': result['flag'],
+                            'isDaytime': result['isDaytime'],
+                          };
+                        });
+                      }
                     },
                     icon: const Icon(Icons.edit_location),
                     label: const Text(
@@ -61,24 +71,24 @@ class _HomeState extends State<Home> {
                     ),
                 ),
 
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                           data['location'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 24.0,
                             letterSpacing: 2.0,
                             color: Colors.white,
                           ),
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
 
                       Text(
                           data['time'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 66.0,
                             color: Colors.white,
                           ),
