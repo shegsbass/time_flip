@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -21,8 +23,18 @@ class _HomeState extends State<Home> {
 
     data = (ModalRoute.of(context)?.settings.arguments as Map<dynamic, dynamic>?)!;
 
-    //set background image
-    String? bgImage = data['isDaytime'] ?? true ? 'daytime.jpg' : 'noontime.jpg';
+    //I'm defining the list of filenames that will display
+    List<String> daytimeImages = ['daytime.jpg', 'daytime-2.jpg', 'daytime-3.jpg'];
+    List<String> noontimeImages = ['noontime.jpg', 'noontime-2.jpg'];
+
+    //Then, I'm randomly selecting the image from the list
+    //by generating a random index for selecting an image
+    Random random = Random();
+    int randomIndex = random.nextInt(data['isDaytime'] ?? true ? daytimeImages.length : noontimeImages.length);
+
+
+    //Select the image filename based on isDaytime and set background image
+    String? bgImage = data['isDaytime'] ?? true ? daytimeImages[randomIndex] : noontimeImages[randomIndex];
     Color? bgColor = data['isDaytime'] ?? true ? Colors.blue : Colors.indigo[700];
 
     return Scaffold(
